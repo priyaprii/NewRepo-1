@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	
+	<!-- SECURITY -->
+	<security:global-method-security
+		secured-annotations="enabled" />
+
+	<security:http auto-config="true" >
+		<!-- Restrict URLs based on role -->
+		
+<!-- <security:intercept-url pattern="/control/admin**" access="ROLE_ADMIN"/> -->
+<security:intercept-url pattern="/control/studentList.mm" access="ROLE_ADMIN"/>
+<security:intercept-url pattern="/tuteeQuestion.mm" access="ROLE_TUTE"/>
+<!-- 		<security:intercept-url pattern="/home.mm" access="ROLE_ADMIN,ROLE_TUTE"/> -->
+		<security:intercept-url pattern="/paymentInfo.mm" access="ROLE_TUTE"/>
+		<security:intercept-url pattern="/paymentHInfo.mm" access="ROLE_TUTE, ROLE_BOTH, ROLE_TUTOR"/>
+		<security:intercept-url pattern="/acceptTutResponse.mm" access="ROLE_TUTE, ROLE_BOTH"/>
+		<security:intercept-url pattern="/tuteeQuestion.mm" access="ROLE_TUTOR, ROLE_BOTH"/>
+		<security:intercept-url pattern="/answer.mm" access="ROLE_TUTOR, ROLE_BOTH"/>
+		
+		
+		<security:intercept-url pattern="/**" />
+		<!-- <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY,ROLE_ADMIN,ROLE_TUTE,ROLE_TUTOR"/> -->
+
+		<security:anonymous granted-authority="IS_AUTHENTICATED_ANONYMOUSLY"/>
+
+		<!-- Override default login and logout pages -->
+		 <security:intercept-url pattern="/login.html*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<!-- <security:form-login login-page="/login.mm"
+			default-target-url="/home.mm" authentication-failure-handler-ref="customAuthFailureHandler" authentication-failure-url="/login.mm?error=1" />
+		<security:logout logout-success-url="/login.mm"/>
+			 -->
+			
+		<security:remember-me key="rememberMeKey" />
+		
+		<security:session-management invalid-session-url="/" />
+		 
+		
+	</security:http>
+	<bean id="customAuthFailureHandler" class="com.myfirstproject.web.AuthFailureHandler">
+	 <constructor-arg value="/login.mm?error="></constructor-arg>
+       </bean>
+		
+  
+	
+	<bean id="rememberMeFilter" class=
+	 "org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+	  <property name="rememberMeServices" ref="rememberMeServices"/>
+	  <property name="authenticationManager" ref="authManager" />    
+	</bean>
+	
+	<bean id="rememberMeServices" class=
+	 "org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+	  <property name="userDetailsService" ref="userDetailsService"/>
+	  <property name="key" value="rememberMeKey"/>
+	</bean>
+	
+	<security:authentication-manager alias="authManager">
+		<security:authentication-provider user-service-ref="userDetailsService"/>
+	</security:authentication-manager>
+	
+	
+	<bean id="userDetailsService"
+		class="com.myfirstproject.web.SpringAuthenticator">
+	</bean>
+	
+	<bean id="loggerListener"
+		class="org.springframework.security.authentication.event.LoggerListener" />	
+
+
+	<!-- END SECURITY -->
+
+	
+	
+</beans>

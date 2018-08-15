@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="myfirstproject">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+			<class>com.myfirstproject.entity.User</class>
+			<class>com.myfirstproject.entity.Employee</class>
+			<class>com.myfirstproject.entity.WrkDetail</class>
+			<class>com.myfirstproject.entity.AdminDetail</class>
+			<class>com.myfirstproject.entity.StudentDetail</class>
+			<class>com.myfirstproject.entity.Student</class>
+			<class>com.myfirstproject.entity.Shift_Mst</class>
+			<class>com.myfirstproject.entity.Cmy_Mst</class>
+			<class>com.myfirstproject.entity.Day_Mst</class>
+			<class>com.myfirstproject.entity.Month_Mst</class>
+			<class>com.myfirstproject.entity.Year_Mst</class>
+			<class>com.myfirstproject.entity.Part_Mst</class>
+			<class>com.myfirstproject.entity.Location_Mst</class>
+			<class>com.myfirstproject.entity.Print_Mst</class>
+		<properties>
+			<property name="connection.provider_class"
+				value="org.hibernate.connection.C3P0ConnectionProvider" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/test" />
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.connection.password" value="" />
+			<property name="hibernate.connection.username" value="" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+		</properties>
+
+	</persistence-unit>
+</persistence>
