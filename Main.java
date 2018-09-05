@@ -7,5 +7,6 @@ class  Main
 		int c=a+b;
 		String s="Why You Addeded";
 		System.out.println(a+b);
+		ghrhjg
 	}
 }
